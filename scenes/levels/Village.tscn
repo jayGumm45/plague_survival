@@ -1,0 +1,174 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/npc/NPC.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/interactables/ClueItem.tscn" id="3"]
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 1
+background_color = Color(0.07, 0.08, 0.11, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.28, 0.27, 0.32, 1)
+ambient_light_energy = 0.7
+fog_enabled = true
+fog_light_color = Color(0.45, 0.46, 0.5, 1)
+fog_density = 0.015
+
+[sub_resource type="StandardMaterial3D" id="Mat_Ground"]
+albedo_color = Color(0.23, 0.2, 0.16, 1)
+roughness = 1.0
+
+[sub_resource type="StandardMaterial3D" id="Mat_Chapel"]
+albedo_color = Color(0.55, 0.55, 0.58, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_Herbalist"]
+albedo_color = Color(0.5, 0.35, 0.2, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_Gravedigger"]
+albedo_color = Color(0.3, 0.3, 0.32, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_Bakery"]
+albedo_color = Color(0.7, 0.55, 0.35, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_Apothecary"]
+albedo_color = Color(0.2, 0.3, 0.27, 1)
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="Mat_Well"]
+albedo_color = Color(0.4, 0.4, 0.42, 1)
+roughness = 0.8
+
+[node name="Village" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+position = Vector3(0, 10, 0)
+rotation_degrees = Vector3(-55, 35, 0)
+light_color = Color(0.85, 0.75, 0.65, 1)
+light_energy = 0.75
+shadow_enabled = true
+
+[node name="Ground" type="CSGBox3D" parent="."]
+position = Vector3(0, -0.5, 0)
+use_collision = true
+size = Vector3(70, 1, 70)
+material = SubResource("Mat_Ground")
+
+[node name="Well" type="CSGCylinder3D" parent="."]
+position = Vector3(0, 0.4, 0)
+use_collision = true
+radius = 1.0
+height = 0.8
+sides = 16
+material = SubResource("Mat_Well")
+
+[node name="Chapel" type="CSGBox3D" parent="."]
+position = Vector3(-15, 2, -15)
+use_collision = true
+size = Vector3(6, 4, 6)
+material = SubResource("Mat_Chapel")
+
+[node name="ChapelSign" type="Label3D" parent="Chapel"]
+position = Vector3(0, 3, 0)
+billboard = 1
+font_size = 48
+text = "Chapel"
+
+[node name="HerbalistHut" type="CSGBox3D" parent="."]
+position = Vector3(15, 1.5, -15)
+use_collision = true
+size = Vector3(5, 3, 5)
+material = SubResource("Mat_Herbalist")
+
+[node name="HerbalistSign" type="Label3D" parent="HerbalistHut"]
+position = Vector3(0, 2.3, 0)
+billboard = 1
+font_size = 48
+text = "Herbalist"
+
+[node name="GravediggerShed" type="CSGBox3D" parent="."]
+position = Vector3(-15, 1.5, 15)
+use_collision = true
+size = Vector3(5, 3, 5)
+material = SubResource("Mat_Gravedigger")
+
+[node name="GravediggerSign" type="Label3D" parent="GravediggerShed"]
+position = Vector3(0, 2.3, 0)
+billboard = 1
+font_size = 48
+text = "Gravedigger"
+
+[node name="Bakery" type="CSGBox3D" parent="."]
+position = Vector3(15, 1.5, 15)
+use_collision = true
+size = Vector3(5, 3, 5)
+material = SubResource("Mat_Bakery")
+
+[node name="BakerySign" type="Label3D" parent="Bakery"]
+position = Vector3(0, 2.3, 0)
+billboard = 1
+font_size = 48
+text = "Bakery"
+
+[node name="ApothecaryHouse" type="CSGBox3D" parent="."]
+position = Vector3(0, 2, -24)
+use_collision = true
+size = Vector3(6, 4, 6)
+material = SubResource("Mat_Apothecary")
+
+[node name="ApothecarySign" type="Label3D" parent="ApothecaryHouse"]
+position = Vector3(0, 3, 0)
+billboard = 1
+font_size = 48
+text = "Apothecary"
+
+[node name="Player" parent="." instance=ExtResource("1")]
+position = Vector3(0, 0, 5)
+
+[node name="Aldric" parent="." instance=ExtResource("2")]
+position = Vector3(-15, 0, -11)
+npc_id = "aldric"
+display_name = "Father Aldric"
+
+[node name="Mira" parent="." instance=ExtResource("2")]
+position = Vector3(15, 0, -11)
+npc_id = "mira"
+display_name = "Mira the Herbalist"
+
+[node name="Tomas" parent="." instance=ExtResource("2")]
+position = Vector3(-15, 0, 11)
+npc_id = "tomas"
+display_name = "Old Tomas"
+
+[node name="Beatrice" parent="." instance=ExtResource("2")]
+position = Vector3(15, 0, 11)
+npc_id = "beatrice"
+display_name = "Beatrice the Baker"
+
+[node name="Edgar" parent="." instance=ExtResource("2")]
+position = Vector3(0, 0, -18)
+npc_id = "edgar"
+display_name = "Edgar the Apothecary"
+is_doctor = true
+
+[node name="ClueLetterMask" parent="." instance=ExtResource("3")]
+position = Vector3(-13, 0.05, -14)
+clue_id = "letter_physician_mask"
+
+[node name="ClueSermonNote" parent="." instance=ExtResource("3")]
+position = Vector3(-16, 0.05, -16.5)
+clue_id = "aldric_sermon_note"
+
+[node name="ClueRing" parent="." instance=ExtResource("3")]
+position = Vector3(1.2, 0.05, 1.3)
+clue_id = "beatrice_ring"
+
+[node name="ClueLedger" parent="." instance=ExtResource("3")]
+position = Vector3(14, 0.05, -13)
+clue_id = "ledger_herbs"
